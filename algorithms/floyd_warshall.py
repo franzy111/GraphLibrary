@@ -1,4 +1,5 @@
-def floyd_warshall(n: int, graph: list) -> list:
+def floyd_warshall(n: int, graph: list) -> tuple:
+    next_vertex = [[None for _ in range(n)] for _ in range(n)]
     dist = [[float('inf')] * n for _ in range(n)]
     for i in range(n):
         for j in range(n):
@@ -6,11 +7,22 @@ def floyd_warshall(n: int, graph: list) -> list:
                 dist[i][j] = 0
             elif graph[i][j]:
                 dist[i][j] = graph[i][j]
+                next_vertex[i][j] = j
     for k in range(n):
         for i in range(n):
             for j in range(n):
-                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
-    return dist
+                if dist[i][j] > dist[i][k] + dist[k][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+                    next_vertex[i][j] = next_vertex[i][k]
+    return dist, next_vertex
+
+
+def get_path(next_vertex, start, end):
+    path = [start + 1]
+    while start != end:
+        start = next_vertex[start][end]
+        path.append(1 + start)
+    return path
 
 
 def main():
@@ -25,9 +37,9 @@ def main():
         temp = list(map(int, input().split()))
         for j in range(n):
             graph[i][j] = temp[j]
-    ans = floyd_warshall(n, graph)
+    ans, for_path = floyd_warshall(n, graph)
     if ans[start][finish] != float('inf'):
-        return ans[start][finish]
+        return ans[start][finish], get_path(for_path, start, finish)
     else:
         return -1
 

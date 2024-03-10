@@ -6,6 +6,8 @@
 По-хорошему надо бы для ребра создать отдельный класс, у которого будет три поля: начало, конец, вес
 '''
 
+parent = [-1] * 100_000  # ПЛОХО!!! что глобальная, потом что-то придумаем :))
+
 
 def ford_bellman(n: int, edges: list[tuple], start: int) -> list:
     # n + 1, потому что решил, что пока что будем работать в 1-индексации
@@ -14,8 +16,19 @@ def ford_bellman(n: int, edges: list[tuple], start: int) -> list:
     for i in range(n - 1):
         for edge in edges:
             a, b, w = edge
-            distance[b] = min(distance[b], distance[a] + w)
+            if distance[b] > distance[a] + w:
+                distance[b] = distance[a] + w
+                parent[b] = a
     return distance
+
+
+def get_path(finish: int) -> list:
+    v = finish
+    path = []
+    while v != -1:
+        path.append(v)
+        v = parent[v]
+    return path[::-1]
 
 
 def main():
@@ -27,7 +40,7 @@ def main():
         edges.append((a, b, c))
     ans = ford_bellman(n, edges, start)
     if ans[finish] != float('inf'):
-        return ans[finish]
+        return ans[finish], get_path(finish)
     else:
         return -1
 

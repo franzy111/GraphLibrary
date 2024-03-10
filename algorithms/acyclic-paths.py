@@ -3,6 +3,7 @@
 MAXN = 100_000
 order = []  # Мне кажется так делать нехорошо, но ничего лучше уже придумать не могу
 used = [False] * MAXN  # Тоже плохо
+parent = [-1] * MAXN
 
 
 def dfs(v: int, graph: list, n: int) -> None:
@@ -30,7 +31,18 @@ def acyclic_paths(graph: list, n: int, start: int) -> list:
         for to, weight in graph[v]:
             if distance[v] != float('inf') and distance[to] > distance[v] + weight:
                 distance[to] = distance[v] + weight
+                parent[to] = v
     return distance
+
+
+def get_path(finish: int) -> list:
+    v = finish
+    path = []
+    while v != -1:
+        # Потому что мы в 0-индексации, а хотим печать в 1-индексации
+        path.append(v + 1)
+        v = parent[v]
+    return path[::-1]
 
 
 def main():
@@ -46,7 +58,7 @@ def main():
         graph[a].append((b, w))
     ans = acyclic_paths(graph, n, start)
     if ans[finish] != float('inf'):
-        return ans[finish]
+        return ans[finish], get_path(finish)
     else:
         return -1
 

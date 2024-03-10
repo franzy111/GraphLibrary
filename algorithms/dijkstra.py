@@ -7,6 +7,7 @@ from queue import PriorityQueue
     за логарифм будет брать минимум. Но приоритетная очередь по-моему хороша, но если самим делать 
     то надо Фибоначчиеву кучу делать 
 """
+parent = [-1] * 100_000  # Думаю, что это плохо
 
 
 def dijkstra(n: int, start: int, graph: list) -> list:
@@ -24,8 +25,19 @@ def dijkstra(n: int, start: int, graph: list) -> list:
         for to, w in graph[v]:
             if distance[to] > distance[v] + w:
                 distance[to] = distance[v] + w
+                parent[to] = v
                 pq.put((distance[to], to))
     return distance
+
+
+def get_path(start: int, finish: int) -> list:
+    v = finish
+    path = []
+    while v != start:
+        path.append(v)
+        v = parent[v]
+    path.append(start)
+    return path[::-1]
 
 
 def main():
@@ -44,7 +56,7 @@ def main():
         graph[b].append((a, w))
     ans = dijkstra(n, start, graph)
     if ans[finish] != float('inf'):
-        return ans[finish]
+        return ans[finish], get_path(start, finish)
     else:
         return -1
 
