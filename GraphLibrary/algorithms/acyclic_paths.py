@@ -45,27 +45,3 @@ def get_path(finish: int, parent: list) -> list:
         path.append(v + 1)
         v = parent[v]
     return path[::-1]
-
-
-'''
-def main():
-    n, m, start, finish = map(int, input().split())
-    start -= 1
-    finish -= 1
-    graph = [[] for _ in range(n + 1)]
-    for i in range(m):
-        a, b, w = map(int, input().split())
-        # 0-индексация
-        a -= 1
-        b -= 1
-        graph[a].append((b, w))
-    ans = acyclic_paths(graph, n, start)
-    if ans[finish] != float('inf'):
-        return ans[finish], get_path(finish)
-    else:
-        return -1
-
-
-if __name__ == '__main__':
-    print(main())
-'''

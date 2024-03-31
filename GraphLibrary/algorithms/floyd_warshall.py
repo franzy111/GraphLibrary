@@ -27,28 +27,3 @@ def get_path(next_vertex, start, end):
         start = next_vertex[start][end]
         path.append(1 + start)
     return path
-
-
-'''
-def main():
-    # Граф задаётся матрицей смежности, где m[a][b] = weight, если между ними есть путь
-    # Тут удобнее в 0-индексации
-    n = int(input())
-    start, finish = map(int, input().split())
-    start -= 1
-    finish -= 1
-    graph = [[0] * n for _ in range(n)]
-    for i in range(n):
-        temp = list(map(int, input().split()))
-        for j in range(n):
-            graph[i][j] = temp[j]
-    ans, for_path = floyd_warshall(n, graph)
-    if ans[start][finish] != float('inf'):
-        return ans[start][finish], get_path(for_path, start, finish)
-    else:
-        return -1
-
-
-if __name__ == '__main__':
-    print(main())
-'''

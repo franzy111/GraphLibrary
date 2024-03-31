@@ -42,29 +42,3 @@ def get_path(start: int, finish: int, parent: list) -> list:
     path.append(start)
     return path[::-1]
 
-
-'''
-def main():
-    n, m, start, finish = map(int, input().split())
-    graph = [[] for _ in range(n + 1)]
-    # Работает в 1-индексации
-    # Считаем, что граф задаётся списком смежности и граф неориентированный
-    # Проблемы: у нас n - должно быть количеством вершин, но не обязательно, что граф будет связный
-    #           То есть может быть меньше чем n строк
-    #           Можно сказать, что при считывании строка заканчивается всегда незначущим нулём
-    #           Либо m раз передавать в формате: 4 2 3, что будет значить, что из 4 путь в 3 за цену 2
-    #           UPD: пока что сделал последний вариант
-    for i in range(m):
-        a, b, w = map(int, input().split())
-        graph[a].append((b, w))
-        graph[b].append((a, w))
-    ans = dijkstra(n, start, graph)
-    if ans[finish] != float('inf'):
-        return ans[finish], get_path(start, finish)
-    else:
-        return -1
-
-
-if __name__ == '__main__':
-    print(main())
-'''

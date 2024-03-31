@@ -31,24 +31,3 @@ def get_path(finish: int, parent: list) -> list:
         path.append(v)
         v = parent[v]
     return path[::-1]
-
-
-# Старый main, изначально делал, чтобы тестить алгоритм, теперь думаю не нужен
-'''
-def main():
-    # Очевидно переделать считывание
-    n, m, start, finish = map(int, input().split())
-    edges = []
-    for i in range(m):
-        a, b, c = map(int, input().split())
-        edges.append((a, b, c))
-    ans = ford_bellman(n, edges, start)
-    if ans[finish] != float('inf'):
-        return ans[finish], get_path(finish)
-    else:
-        return -1
-
-
-if __name__ == '__main__':
-    print(main())
-'''

@@ -22,8 +22,11 @@ class Graph:
 
     def add_edge(self, edge: Edge) -> None:
         first_node, second_node = edge
-        if first_node not in self.adjacency_list or second_node not in self.adjacency_list:
-            raise ValueError("Some of the nodes are not in the graph")
+        if first_node not in self.adjacency_list:
+            self.adjacency_list[first_node] = []
+        if second_node not in self.adjacency_list:
+            self.adjacency_list[second_node] = []
+
         if first_node in self.adjacency_list[second_node] or second_node in self.adjacency_list[first_node]:
             raise ValueError("There is already such a nodes in the graph")
 
