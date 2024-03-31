@@ -1,5 +1,9 @@
-def floyd_warshall(n: int, graph: list) -> tuple:
-    next_vertex = [[None for _ in range(n)] for _ in range(n)]
+from structure.Graph import Graph
+
+
+def floyd_warshall(n: int, graph: Graph) -> tuple:
+    graph = graph.to_adjacency_matrix()
+    next_vertex = [[float('inf') for _ in range(n)] for _ in range(n)]
     dist = [[float('inf')] * n for _ in range(n)]
     for i in range(n):
         for j in range(n):
@@ -25,6 +29,7 @@ def get_path(next_vertex, start, end):
     return path
 
 
+'''
 def main():
     # Граф задаётся матрицей смежности, где m[a][b] = weight, если между ними есть путь
     # Тут удобнее в 0-индексации
@@ -46,3 +51,4 @@ def main():
 
 if __name__ == '__main__':
     print(main())
+'''

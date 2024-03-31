@@ -1,3 +1,5 @@
+from structure.Graph import Graph
+
 '''
 Самая простейшая реализация
 Будем ли оптимизировать? Есть улучшенный алгоритм SPFA, но как будто это вообще отдельный алгоритм
@@ -9,10 +11,11 @@
 parent = [-1] * 100_000  # ПЛОХО!!! что глобальная, потом что-то придумаем :))
 
 
-def ford_bellman(n: int, edges: list[tuple], start: int) -> list:
+def ford_bellman(n: int, graph: Graph, start: int) -> list:
     # n + 1, потому что решил, что пока что будем работать в 1-индексации
     distance = [float('inf') for _ in range(n + 1)]
     distance[start] = 0
+    edges = graph.get_edges()
     for i in range(n - 1):
         for edge in edges:
             a, b, w = edge
@@ -30,7 +33,8 @@ def get_path(finish: int) -> list:
         v = parent[v]
     return path[::-1]
 
-
+# Старый main, изначально делал, чтобы тестить алгоритм, теперь думаю не нужен
+'''
 def main():
     # Очевидно переделать считывание
     n, m, start, finish = map(int, input().split())
@@ -47,3 +51,4 @@ def main():
 
 if __name__ == '__main__':
     print(main())
+'''

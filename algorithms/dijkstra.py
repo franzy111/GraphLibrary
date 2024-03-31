@@ -1,4 +1,5 @@
 from queue import PriorityQueue
+from structure.Graph import Graph
 
 """
 Над чем подумать:
@@ -10,7 +11,7 @@ from queue import PriorityQueue
 parent = [-1] * 100_000  # Думаю, что это плохо
 
 
-def dijkstra(n: int, start: int, graph: list) -> list:
+def dijkstra(n: int, start: int, graph: Graph) -> list:
     # n + 1, потому что решил, что пока что будем работать в 1-индексации
     distance = [float('inf') for _ in range(n + 1)]
     distance[start] = 0
@@ -22,7 +23,7 @@ def dijkstra(n: int, start: int, graph: list) -> list:
         if processed[v]:
             continue
         processed[v] = True
-        for to, w in graph[v]:
+        for to, w in graph.get_adjacent_nodes(v):
             if distance[to] > distance[v] + w:
                 distance[to] = distance[v] + w
                 parent[to] = v
@@ -40,6 +41,7 @@ def get_path(start: int, finish: int) -> list:
     return path[::-1]
 
 
+'''
 def main():
     n, m, start, finish = map(int, input().split())
     graph = [[] for _ in range(n + 1)]
@@ -63,3 +65,4 @@ def main():
 
 if __name__ == '__main__':
     print(main())
+'''
