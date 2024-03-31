@@ -1,4 +1,4 @@
-import Edge
+from .Edge import Edge
 
 
 class Graph:
@@ -42,6 +42,9 @@ class Graph:
     def get_incident_edge(self, first_node, second_node) -> Edge:
         return self.list_of_edges[(first_node, second_node)]
 
+    def get_weight_edge(self, first_node, second_node):
+        return self.list_of_edges[(first_node, second_node)].get_weight()
+
     def to_adjacency_matrix(self):
         vertices = self.get_nodes()
         adj_matrix = [[0 for _ in range(len(vertices))] for _ in range(len(vertices))]
@@ -53,3 +56,5 @@ class Graph:
             adj_matrix[first_node_index][second_node_index] = edge.weight
             adj_matrix[second_node_index][first_node_index] = edge.weight
         return adj_matrix
+    def __iter__(self):
+        return iter((self))

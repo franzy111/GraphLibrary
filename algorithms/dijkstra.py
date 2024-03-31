@@ -23,7 +23,9 @@ def dijkstra(n: int, start: int, finish: int, graph: Graph) -> list:
         if processed[v]:
             continue
         processed[v] = True
-        for to, w in graph.get_adjacent_nodes(v):
+        list_of_adj = graph.get_adjacent_nodes(v)
+        for to in list_of_adj:
+            w = graph.get_weight_edge(v, to)
             if distance[to] > distance[v] + w:
                 distance[to] = distance[v] + w
                 parent[to] = v
