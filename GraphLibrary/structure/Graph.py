@@ -52,9 +52,11 @@ class Graph:
             first_node, second_node = edge
             first_node_index = vertices.index(first_node)
             second_node_index = vertices.index(second_node)
+
             # Как быть в случае ориентированого?
             adj_matrix[first_node_index][second_node_index] = edge.weight
             adj_matrix[second_node_index][first_node_index] = edge.weight
         return adj_matrix
+
     def __iter__(self):
         return iter((self))

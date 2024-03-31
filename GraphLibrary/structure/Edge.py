@@ -6,5 +6,6 @@ class Edge:
 
     def __iter__(self):
         return iter((self.start, self.finish))
+
     def get_weight(self):
         return self.weight
