@@ -8,13 +8,13 @@ from GraphLibrary.structure.Graph import Graph
     за логарифм будет брать минимум. Но приоритетная очередь по-моему хороша, но если самим делать 
     то надо Фибоначчиеву кучу делать 
 """
-parent = [-1] * 100_000  # Думаю, что это плохо
 
 
-def dijkstra(n: int, start: int, graph: Graph) -> list:
+def dijkstra(n: int, start: int, finish: int, graph: Graph) -> list:
     # n + 1, потому что решил, что пока что будем работать в 1-индексации
     distance = [float('inf') for _ in range(n + 1)]
     distance[start] = 0
+    parent = [-1] * (n + 1)
     processed = [False for _ in range(n + 1)]
     pq = PriorityQueue()
     pq.put((0, start))
@@ -23,15 +23,17 @@ def dijkstra(n: int, start: int, graph: Graph) -> list:
         if processed[v]:
             continue
         processed[v] = True
-        for to, w in graph.get_adjacent_nodes(v):
+        list_of_adj = graph.get_adjacent_nodes(v)
+        for to in list_of_adj:
+            w = graph.get_weight_edge(v, to)
             if distance[to] > distance[v] + w:
                 distance[to] = distance[v] + w
                 parent[to] = v
                 pq.put((distance[to], to))
-    return distance
+    return get_path(start, finish, parent)
 
 
-def get_path(start: int, finish: int) -> list:
+def get_path(start: int, finish: int, parent: list) -> list:
     v = finish
     path = []
     while v != start:

@@ -2,14 +2,10 @@ from GraphLibrary.structure.Graph import Graph
 
 # Будем ли предварительно проверять граф на ацикличность?
 # Ориентированный ациклический граф
-MAXN = 100_000
-order = []  # Мне кажется так делать нехорошо, но ничего лучше уже придумать не могу
-used = [False] * MAXN  # Тоже плохо
-parent = [-1] * MAXN
 
 
 # Может dfs как-то отдельно вынести?
-def dfs(v: int, graph: Graph, n: int) -> None:
+def dfs(v: int, graph: Graph, n: int, order: list, used: list) -> None:
     used[v] = True
     for to, weight in graph.get_adjacent_nodes(v):
         if not used[to]:
@@ -18,27 +14,30 @@ def dfs(v: int, graph: Graph, n: int) -> None:
 
 
 def topological_sort(graph: Graph, n: int) -> list:
+    order = []
+    used = [False] * n
     for v in range(n):
         if not used[v]:
-            dfs(v, graph, n)
+            dfs(v, graph, n, order, used)
     order.reverse()
     return order
 
 
-def acyclic_paths(graph: Graph, n: int, start: int) -> list:
+def acyclic_paths(graph: Graph, n: int, start: int, finish: int) -> list:
     distance = [float('inf') for _ in range(n + 1)]
     distance[start] = 0
+    parent = [-1] * n
     topologicalsort = topological_sort(graph, n)
     for v in topologicalsort:
         for to, weight in graph.get_adjacent_nodes(v):
             if distance[v] != float('inf') and distance[to] > distance[v] + weight:
                 distance[to] = distance[v] + weight
                 parent[to] = v
-    return distance
+    return get_path(finish, parent)
 
 
 # Совпадает ещё у двух алгоритмов, можно вынести в отдельный метод как-будто
-def get_path(finish: int) -> list:
+def get_path(finish: int, parent: list) -> list:
     v = finish
     path = []
     while v != -1:
