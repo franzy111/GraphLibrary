@@ -1,5 +1,5 @@
 from queue import PriorityQueue
-from structure.Graph import Graph
+from GraphLibrary.structure.Graph import Graph
 
 """
 Над чем подумать:

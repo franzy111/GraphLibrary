@@ -1,4 +1,4 @@
-from structure.Graph import Graph
+from GraphLibrary.structure.Graph import Graph
 
 # Будем ли предварительно проверять граф на ацикличность?
 # Ориентированный ациклический граф

@@ -1,4 +1,4 @@
-from structure.Graph import Graph
+from GraphLibrary.structure.Graph import Graph
 
 
 def floyd_warshall(n: int, graph: Graph) -> tuple:
