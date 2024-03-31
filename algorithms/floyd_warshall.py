@@ -1,7 +1,7 @@
 from structure.Graph import Graph
 
 
-def floyd_warshall(n: int, graph: Graph) -> tuple:
+def floyd_warshall(n: int, graph: Graph, start: int, finish: int) -> list:
     graph = graph.to_adjacency_matrix()
     next_vertex = [[float('inf') for _ in range(n)] for _ in range(n)]
     dist = [[float('inf')] * n for _ in range(n)]
@@ -18,7 +18,7 @@ def floyd_warshall(n: int, graph: Graph) -> tuple:
                 if dist[i][j] > dist[i][k] + dist[k][j]:
                     dist[i][j] = dist[i][k] + dist[k][j]
                     next_vertex[i][j] = next_vertex[i][k]
-    return dist, next_vertex
+    return get_path(next_vertex, start, finish)
 
 
 def get_path(next_vertex, start, end):
