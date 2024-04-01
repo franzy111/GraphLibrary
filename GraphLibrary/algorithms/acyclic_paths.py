@@ -7,9 +7,10 @@ from GraphLibrary.structure.Graph import Graph
 # Может dfs как-то отдельно вынести?
 def dfs(v: int, graph: Graph, n: int, order: list, used: list) -> None:
     used[v] = True
-    for to, weight in graph.get_adjacent_nodes(v):
+    list_of_adj = graph.get_adjacent_nodes(v)
+    for to in list_of_adj:
         if not used[to]:
-            dfs(to, graph, n)
+            dfs(to, graph, n, order, used)
     order.append(v)
 
 
@@ -29,7 +30,9 @@ def acyclic_paths(graph: Graph, n: int, start: int, finish: int) -> list:
     parent = [-1] * n
     topologicalsort = topological_sort(graph, n)
     for v in topologicalsort:
-        for to, weight in graph.get_adjacent_nodes(v):
+        list_of_adj = graph.get_adjacent_nodes(v)
+        for to in list_of_adj:
+            weight = graph.get_weight_edge(v, to)
             if distance[v] != float('inf') and distance[to] > distance[v] + weight:
                 distance[to] = distance[v] + weight
                 parent[to] = v
@@ -42,6 +45,6 @@ def get_path(finish: int, parent: list) -> list:
     path = []
     while v != -1:
         # Потому что мы в 0-индексации, а хотим печать в 1-индексации
-        path.append(v + 1)
+        path.append(v)
         v = parent[v]
     return path[::-1]

@@ -22,8 +22,8 @@ def floyd_warshall(n: int, graph: Graph, start: int, finish: int) -> list:
 
 
 def get_path(next_vertex, start, end):
-    path = [start + 1]
+    path = [start]
     while start != end:
         start = next_vertex[start][end]
-        path.append(1 + start)
+        path.append(start)
     return path

@@ -17,7 +17,8 @@ def ford_bellman(n: int, graph: Graph, start: int, finish: int) -> list:
     edges = graph.get_edges()
     for i in range(n - 1):
         for edge in edges:
-            a, b, w = edge
+            a, b = edge
+            w = edge.get_weight()
             if distance[b] > distance[a] + w:
                 distance[b] = distance[a] + w
                 parent[b] = a
