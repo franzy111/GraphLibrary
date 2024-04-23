@@ -10,7 +10,19 @@ from GraphLibrary.structure.Graph import Graph
 
 
 def ford_bellman(n: int, graph: Graph, start: int, finish: int) -> list:
-    # n + 1, потому что решил, что пока что будем работать в 1-индексации
+    """
+    Находит кратчайший путь от начальной вершины до конечной вершины в графе,
+    используя алгоритм Беллмана-Форда.
+
+    :param n: (int): Количество вершин в графе.
+    :param graph: (Graph): Граф, в котором нужно найти кратчайший путь.
+    :param start: (int): Индекс начальной вершины.
+    :param finish: (int): Индекс конечной вершины.
+
+    :return: Список, представляющий кратчайший путь от начальной до конечной вершины.
+
+    Примечания: не поддерживает отрицательные циклы.
+    """
     distance = [float('inf') for _ in range(n + 1)]
     distance[start] = 0
     parent = [-1 for _ in range(n + 1)]
@@ -22,10 +34,10 @@ def ford_bellman(n: int, graph: Graph, start: int, finish: int) -> list:
             if distance[b] > distance[a] + w:
                 distance[b] = distance[a] + w
                 parent[b] = a
-    return get_path(finish, parent)
+    return _get_path(finish, parent)
 
 
-def get_path(finish: int, parent: list) -> list:
+def _get_path(finish: int, parent: list) -> list:
     v = finish
     path = []
     while v != -1:

@@ -11,7 +11,18 @@ from GraphLibrary.structure.Graph import Graph
 
 
 def dijkstra(n: int, start: int, finish: int, graph: Graph) -> list:
-    # n + 1, потому что решил, что пока что будем работать в 1-индексации
+    """
+    Выполняет алгоритм Дейкстры для поиска кратчайшего пути в графе.
+
+    :param n: (int): Количество вершин в графе.
+    :param start: (int): Индекс начальной вершины.
+    :param finish: (int): Индекс конечной вершины.
+    :param graph: (Graph): Граф, в котором нужно найти кратчайший путь.
+
+    :return: Список вершин, представляющий кратчайший путь от начальной до конечной вершины.
+
+    Примечания: не поддерживает отрицательные веса.
+    """
     distance = [float('inf') for _ in range(n + 1)]
     distance[start] = 0
     parent = [-1] * (n + 1)
@@ -30,10 +41,10 @@ def dijkstra(n: int, start: int, finish: int, graph: Graph) -> list:
                 distance[to] = distance[v] + w
                 parent[to] = v
                 pq.put((distance[to], to))
-    return get_path(start, finish, parent)
+    return _get_path(start, finish, parent)
 
 
-def get_path(start: int, finish: int, parent: list) -> list:
+def _get_path(start: int, finish: int, parent: list) -> list:
     v = finish
     path = []
     while v != start:
@@ -41,4 +52,3 @@ def get_path(start: int, finish: int, parent: list) -> list:
         v = parent[v]
     path.append(start)
     return path[::-1]
-
