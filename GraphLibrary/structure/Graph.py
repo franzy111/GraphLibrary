@@ -20,6 +20,11 @@ class Graph:
             raise ValueError("This node is already in the graph")
         self.adjacency_list[node] = []
 
+    def has_edge(self, node1: int, node2: int) -> bool:
+        if node1 in self.adjacency_list[node2] or node2 in self.adjacency_list[node1]:
+            return True
+        return False
+
     def add_edge(self, edge: Edge) -> None:
         first_node, second_node = edge
         if first_node not in self.adjacency_list:
